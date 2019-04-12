@@ -15,17 +15,17 @@ INSERT INTO products (product_name,department_name,price,stock_quantity) VALUES 
 INSERT INTO products (product_name,department_name,price,stock_quantity) VALUES ("lays_BBQ_Family","snacks",3.99,3000);
 INSERT INTO products (product_name,department_name,price,stock_quantity) VALUES ("doritos_original_Reg","snacks",1.99,3000);
 
-INSERT INTO products (product_name,department_name,price,stock_quantity) VALUES ("doritos_original_Reg","random",1.99,3000);
 
 
 
 INSERT INTO departments(department_name,over_head_costs) VALUES("snacks",1500);
 INSERT INTO departments(department_name,over_head_costs) VALUES("drinks",1500);
-INSERT INTO departments(department_name,over_head_costs) VALUES("electronics",1500);
 
 
 SELECT * FROM products;
 SELECT * FROM departments;
+
+SELECT department_name FROM departments;
 
 SELECT d.department_id, d.department_name, d.over_head_costs, SUM(p.product_sales) AS total_sales, SUM(p.product_sales) - d.over_head_costs AS total_profit
 FROM departments d LEFT JOIN products p ON (d.department_name = p.department_name)

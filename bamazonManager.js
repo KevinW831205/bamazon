@@ -134,6 +134,15 @@ bamazonManager = {
 
     addProductInformation: function (callback) {
         //function that prompts user for the product information to be passed on to the callback which adds the information to database
+        var departmentArr = [];
+        var query = connection.query(
+            "SELECT department_name FROM departments",
+            function (err, departments) {
+                for (var i = 0; i < departments.length; i++) {
+                    departmentArr.push(departments[i].department_name)
+                }
+            }
+        );
         inquirer.prompt([
             {
                 // prompt for an userinput
@@ -150,13 +159,15 @@ bamazonManager = {
             {
                 name: "department",
                 message: "\nWhat department is the product in?",
-                validate: function (value) {
-                    if (value) {
-                        return true
-                    } else {
-                        return "Please enter a department name"
-                    }
-                }
+                type: "list",
+                choices: departmentArr
+                // validate: function (value) {
+                //     if (value) {
+                //         return true
+                //     } else {
+                //         return "Please enter a department name"
+                //     }
+                // }
             },
             {
                 name: "price",
@@ -221,11 +232,15 @@ bamazonManager = {
             },
             function (err, res) {
                 console.log("Product " + name + " is now for sale!\n");
-                // Call updateProduct AFTER the INSERT completes
                 connection.end()
             }
         );
 
+    },
+
+    returnValue: function (value) {
+        console.log(value);
+        return value
     },
 
     manage: function () {
@@ -277,3 +292,4 @@ bamazonManager = {
 
 bamazonManager.manage()
 
+// console.log(bamazonManager.getDepartments())
